@@ -13,6 +13,5 @@ export class LoginService{
     postLoginCredentials(userCredentials: ILogin) : Observable<any>
     {
         return this.http.post(this.LoginUrl, userCredentials);
-        // return of(userCredentials);
     }
 }

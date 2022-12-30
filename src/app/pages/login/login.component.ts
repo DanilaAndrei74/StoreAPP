@@ -1,11 +1,12 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, RouterModule } from '@angular/router';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 import {NgForm} from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { ILogin } from 'src/app/data/ILogin';
-import { LoginService } from 'src/app/services/loginService';
+import { ApiHttpService } from 'src/app/services/apiHttpService';
+import { ApiPaths } from 'src/app/data/apiPaths';
 
 
 
@@ -20,14 +21,26 @@ export class LoginComponent {
         email:"",
         password:""
     };
+    
+    token:any
 
-    constructor(private loginService:LoginService) {}
+    constructor(private apiHttpService:ApiHttpService,
+                private router:Router) {}
     
 
     public onSubmit(loginForm:NgForm):void
     {
         if(loginForm.invalid) return;
-
-        this.loginService.postLoginCredentials(this.loginCredentials).subscribe();
+        
+        const url = this.apiHttpService.baseUrl + ApiPaths.Login;
+        this.apiHttpService.post(url, this.loginCredentials,).subscribe(
+            success => 
+            {
+                this.token = success;
+                console.log(this.token);
+                if(success) this.router.navigateByUrl("Home");
+            }
+        );
+        
     }
 }

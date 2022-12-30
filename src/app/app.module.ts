@@ -20,6 +20,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatIconModule} from '@angular/material/icon';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { ApiHttpService } from './services/apiHttpService';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,7 @@ import { HttpClientModule } from '@angular/common/http';
     MatCheckboxModule,
     MatIconModule
   ],
-  providers: [LoginService],
+  providers: [LoginService,ApiHttpService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
