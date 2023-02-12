@@ -10,8 +10,12 @@ export class LoginService{
     constructor(private http:HttpClient) {}
     LoginUrl = 'https://localhost:7113/Login'
 
+    options= {
+        responseType: 'text' as const
+    }
+
     postLoginCredentials(userCredentials: ILogin) : Observable<any>
     {
-        return this.http.post(this.LoginUrl, userCredentials);
+        return this.http.post(this.LoginUrl, userCredentials, this.options);
     }
 }

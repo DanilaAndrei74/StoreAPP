@@ -1,5 +1,6 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { Constants } from "../data/Constants";
 
 
 @Injectable({
@@ -9,8 +10,12 @@ export class ApiHttpService{
     baseUrl = 'https://localhost:7113/'
      
     options = {
-        responseType: 'text' as const,
-      };
+        responseType: 'arraybuffer',
+        headers: new HttpHeaders({
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + Constants.JWT
+          })
+        };
 
     constructor (private http: HttpClient) { }
 

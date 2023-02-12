@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { ILogin } from 'src/app/data/ILogin';
 import { ApiHttpService } from 'src/app/services/apiHttpService';
 import { ApiPaths } from 'src/app/data/apiPaths';
+import { Constants } from 'src/app/data/Constants';
 
 
 
@@ -36,9 +37,12 @@ export class LoginComponent {
         this.apiHttpService.post(url, this.loginCredentials,).subscribe(
             success => 
             {
-                this.token = success;
+                const decoder = new TextDecoder();
+                const responseText = decoder.decode(success);
+                this.token = responseText;
+                Constants.JWT = responseText;
                 console.log(this.token);
-                if(success) this.router.navigateByUrl("Home");
+                this.router.navigateByUrl("Home");
             }
         );
         
